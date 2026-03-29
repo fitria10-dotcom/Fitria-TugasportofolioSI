@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Nama Anda — Profil</title>
+  <meta name="description" content="Profil pribadi — Nama Anda. Desainer & Pengembang. Modern dark single-page website.">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#home" aria-label="Beranda — Nama Anda">
+        <svg class="logo" width="36" height="36" viewBox="0 0 24 24" aria-hidden="true">
+          <defs>
+            <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stop-color="#00d4ff"/>
+              <stop offset="100%" stop-color="#8a2be2"/>
+            </linearGradient>
+          </defs>
+          <rect width="24" height="24" rx="6" fill="url(#g1)"></rect>
+        </svg>
+        <span class="brand-text">Nama Anda</span>
+      </a>
+
+      <nav class="nav" aria-label="Main navigation">
+        <ul class="nav-list" id="nav-list">
+          <li><a href="#home">Beranda</a></li>
+          <li><a href="#about">Tentang</a></li>
+          <li><a href="#skills">Keahlian</a></li>
+          <li><a href="#projects">Proyek</a></li>
+          <li><a href="#contact">Kontak</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button id="theme-toggle" class="btn-icon" aria-label="Toggle tema gelap/terang">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+
+        <button id="mobile-menu-btn" class="btn-icon mobile-only" aria-label="Buka menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-menu" class="mobile-menu" hidden>
+      <ul>
+        <li><a href="#home">Beranda</a></li>
+        <li><a href="#about">Tentang</a></li>
+        <li><a href="#skills">Keahlian</a></li>
+        <li><a href="#projects">Proyek</a></li>
+        <li><a href="#contact">Kontak</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <h1 class="hero-title">Halo, saya <span class="accent">Nama Anda</span></h1>
+          <p class="hero-sub">Saya seorang Desainer & Pengembang Web yang menyukai antarmuka minimalis, performa cepat, dan pengalaman pengguna yang elegan.</p>
+          <div class="hero-ctas">
+            <a class="btn primary" href="#projects">Lihat Proyek</a>
+            <a class="btn ghost" href="#contact">Hubungi Saya</a>
+          </div>
+        </div>
+
+        <div class="hero-card" aria-hidden="true">
+          <!-- Grafik profil sederhana (SVG placeholder) -->
+          <svg viewBox="0 0 200 200" class="profile-art" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustrasi profil">
+            <defs>
+              <linearGradient id="grad" x1="0" x2="1">
+                <stop offset="0%" stop-color="#00d4ff"/>
+                <stop offset="100%" stop-color="#8a2be2"/>
+              </linearGradient>
+            </defs>
+            <rect width="200" height="200" rx="20" fill="rgba(255,255,255,0.02)"/>
+            <circle cx="100" cy="80" r="36" fill="url(#grad)" opacity="0.95"/>
+            <path d="M40 150c30-30 130-30 160 0" stroke="#2b2f42" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.25"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="container">
+        <h2 class="section-title">Tentang Saya</h2>
+        <div class="card about-grid">
+          <div class="about-text">
+            <p>Saya berfokus pada pembuatan antarmuka web yang cepat, aksesibel, dan estetik. Menggabungkan prinsip desain dan teknik front-end modern untuk membangun pengalaman pengguna yang bermakna.</p>
+            <ul class="meta-list">
+              <li><strong>Lokasi:</strong> Kota, Negara</li>
+              <li><strong>Pekerjaan:</strong> Freelancer / Full-time</li>
+              <li><strong>Email:</strong> nama@domain.com</li>
+            </ul>
+          </div>
+          <div class="about-stats">
+            <div class="stat">
+              <div class="stat-value">8+</div>
+              <div class="stat-label">Tahun Pengalaman</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">50+</div>
+              <div class="stat-label">Proyek</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">100%</div>
+              <div class="stat-label">Kepuasan Klien</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="section">
+      <div class="container">
+        <h2 class="section-title">Keahlian</h2>
+        <div class="skills-grid">
+          <div class="skill">
+            <div class="skill-name">HTML & CSS</div>
+            <div class="skill-bar"><span style="width:95%"></span></div>
+          </div>
+          <div class="skill">
+            <div class="skill-name">JavaScript</div>
+            <div class="skill-bar"><span style="width:90%"></span></div>
+          </div>
+          <div class="skill">
+            <div class="skill-name">Accessibility</div>
+            <div class="skill-bar"><span style="width:85%"></span></div>
+          </div>
+          <div class="skill">
+            <div class="skill-name">Performance</div>
+            <div class="skill-bar"><span style="width:88%"></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section">
+      <div class="container">
+        <h2 class="section-title">Proyek</h2>
+        <div class="projects-grid">
+          <article class="project-card">
+            <div class="project-media" aria-hidden="true"></div>
+            <div class="project-body">
+              <h3>Project One</h3>
+              <p>Deskripsi singkat proyek, teknologi yang dipakai, dan nilai yang dihasilkan.</p>
+              <div class="project-actions">
+                <a class="btn small" href="#" target="_blank" rel="noopener">Demo</a>
+                <a class="btn small ghost" href="#" target="_blank" rel="noopener">Repo</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-media" aria-hidden="true"></div>
+            <div class="project-body">
+              <h3>Project Two</h3>
+              <p>Deskripsi singkat proyek, teknologi yang dipakai, dan nilai yang dihasilkan.</p>
+              <div class="project-actions">
+                <a class="btn small" href="#" target="_blank" rel="noopener">Demo</a>
+                <a class="btn small ghost" href="#" target="_blank" rel="noopener">Repo</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-media" aria-hidden="true"></div>
+            <div class="project-body">
+              <h3>Project Three</h3>
+              <p>Deskripsi singkat proyek, teknologi yang dipakai, dan nilai yang dihasilkan.</p>
+              <div class="project-actions">
+                <a class="btn small" href="#" target="_blank" rel="noopener">Demo</a>
+                <a class="btn small ghost" href="#" target="_blank" rel="noopener">Repo</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="container">
+        <h2 class="section-title">Kontak</h2>
+        <div class="contact-grid">
+          <form id="contact-form" class="card contact-card" novalidate>
+            <label class="field">
+              <span>Nama</span>
+              <input type="text" name="name" id="name" placeholder="Nama lengkap" required>
+            </label>
+            <label class="field">
+              <span>Email</span>
+              <input type="email" name="email" id="email" placeholder="email@domain.com" required>
+            </label>
+            <label class="field">
+              <span>Pesan</span>
+              <textarea name="message" id="message" rows="5" placeholder="Tulis pesan..." required></textarea>
+            </label>
+            <div class="form-actions">
+              <button type="submit" class="btn primary">Kirim Pesan</button>
+              <button type="reset" class="btn ghost">Reset</button>
+            </div>
+            <p id="form-status" class="form-status" aria-live="polite"></p>
+          </form>
+
+          <div class="card contact-info">
+            <h3>Informasi</h3>
+            <p>Ingin berdiskusi? Kirim pesan atau hubungi via email di <a href="mailto:nama@domain.com">nama@domain.com</a>.</p>
+            <ul class="social">
+              <li><a href="#" aria-label="GitHub" rel="noopener">GitHub</a></li>
+              <li><a href="#" aria-label="LinkedIn" rel="noopener">LinkedIn</a></li>
+              <li><a href="#" aria-label="Twitter" rel="noopener">Twitter</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> Nama Anda. All rights reserved.</p>
+      <p class="credits">Built with <span class="accent">HTML</span>, <span class="accent">CSS</span>, <span class="accent">JS</span>.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
