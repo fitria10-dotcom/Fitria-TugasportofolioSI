@@ -1,1 +1,405 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium Portfolio | Fitria Oktafiani</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap');
 
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  body{
+    background:#000;
+    color:#fff;
+    font-family:'Rajdhani',sans-serif;
+    overflow-x:hidden;
+    min-height:100vh;
+  }
+
+  #stars-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;}
+
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    z-index:1;
+    overflow:hidden;
+  }
+
+  .circuit-bg{
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(150,0,255,.08) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(150,0,255,.08) 1px,transparent 1px);
+    background-size:60px 60px;
+    z-index:0;
+  }
+
+  .watermark{
+    position:absolute;
+    font-family:'Orbitron',sans-serif;
+    font-size:clamp(40px,12vw,110px);
+    font-weight:900;
+    color:rgba(255,255,255,.04);
+    text-align:center;
+    line-height:1.1;
+    pointer-events:none;
+    user-select:none;
+    top:50%;transform:translateY(-50%);
+    width:100%;
+  }
+
+  .planet{
+    width:clamp(140px,35vw,220px);
+    height:clamp(140px,35vw,220px);
+    border-radius:50%;
+    /* INTEGRASI FOTO DISINI */
+    background: url('IMG_20260408_085919.jpg') no-repeat center;
+    background-size: cover;
+    border: 4px solid rgba(180, 0, 255, 0.4);
+    /* -------------------- */
+    box-shadow:0 0 60px 30px rgba(255,80,130,.45),0 0 120px 60px rgba(200,0,100,.2);
+    position:relative;
+    z-index:2;
+    animation:float 6s ease-in-out infinite;
+    flex-shrink:0;
+  }
+  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-18px);}}
+
+  .orbit-wrapper{
+    position:relative;
+    display:flex;align-items:center;justify-content:center;
+    width:clamp(320px,85vw,500px);
+    height:clamp(320px,85vw,500px);
+    margin:0 auto;
+    z-index:2;
+  }
+
+  .orbit-ring{
+    position:absolute;inset:0;
+    border-radius:50%;
+    border:1px dashed rgba(180,0,255,.3);
+    animation:spin 18s linear infinite;
+  }
+  @keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+
+  .orbit-icon{
+    position:absolute;
+    width:56px;height:56px;
+    background:rgba(20,0,40,.85);
+    border:1px solid rgba(180,0,255,.5);
+    border-radius:50%;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    cursor:pointer;
+    font-size:10px;
+    color:#d9b3ff;
+    gap:3px;
+    backdrop-filter:blur(6px);
+    transition:box-shadow .2s;
+    border:none;
+  }
+  .orbit-icon:hover{box-shadow:0 0 18px rgba(200,0,255,.7);}
+  .orbit-icon svg{width:22px;height:22px;fill:none;stroke:#d9b3ff;stroke-width:1.8;}
+  .orbit-icon span{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:9px;letter-spacing:.5px;color:#d9b3ff;}
+
+  .name-block{text-align:center;z-index:2;margin-top:12px;}
+  .name-block h1{
+    font-family:'Orbitron',sans-serif;
+    font-size:clamp(22px,6vw,48px);
+    font-weight:900;
+    letter-spacing:3px;
+    background:linear-gradient(135deg,#fff 30%,#ff80b0);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  .name-block p{
+    font-size:clamp(11px,3vw,16px);
+    letter-spacing:4px;
+    color:#c084fc;
+    margin-top:4px;
+    text-transform:uppercase;
+  }
+
+  .scroll-hint{
+    position:absolute;bottom:24px;left:50%;transform:translateX(-50%);
+    font-size:11px;color:rgba(180,0,255,.6);letter-spacing:2px;
+    animation:blink 2s infinite;
+  }
+  @keyframes blink{0%,100%{opacity:.4;}50%{opacity:1;}}
+
+  /* MODAL */
+  .modal-overlay{
+    display:none;
+    position:fixed;inset:0;
+    background:rgba(0,0,0,.75);
+    z-index:100;
+    align-items:center;justify-content:center;
+    padding:16px;
+    backdrop-filter:blur(4px);
+  }
+  .modal-overlay.active{display:flex;}
+  .modal{
+    background:linear-gradient(135deg,#0d001a,#1a0030);
+    border:1px solid rgba(200,0,255,.4);
+    border-radius:16px;
+    padding:28px 24px;
+    max-width:520px;width:100%;
+    max-height:88vh;overflow-y:auto;
+    position:relative;
+    box-shadow:0 0 40px rgba(150,0,255,.3);
+    animation:pop .3s ease;
+  }
+  @keyframes pop{from{transform:scale(.85);opacity:0;}to{transform:scale(1);opacity:1;}}
+  .modal h2{font-family:'Orbitron',sans-serif;font-size:18px;color:#ff80b0;margin-bottom:16px;letter-spacing:2px;}
+  .modal .close{position:absolute;top:14px;right:16px;background:none;border:none;color:#c084fc;font-size:22px;cursor:pointer;}
+  .modal p,.modal li{font-size:14px;line-height:1.8;color:#e2d4f0;margin-bottom:8px;}
+  .modal ul{padding-left:18px;}
+  .modal ul li{list-style:disc;}
+  .section-label{font-family:'Orbitron',sans-serif;font-size:11px;color:#c084fc;letter-spacing:2px;margin:14px 0 6px;border-bottom:1px solid rgba(200,0,255,.2);padding-bottom:4px;}
+  .badge{display:inline-block;background:rgba(200,0,255,.15);border:1px solid rgba(200,0,255,.3);border-radius:20px;padding:3px 10px;font-size:12px;color:#d9b3ff;margin:3px;}
+  .project-card{background:rgba(255,255,255,.04);border:1px solid rgba(200,0,255,.2);border-radius:10px;padding:12px;margin-bottom:10px;}
+  .project-card h3{color:#ff80b0;font-size:14px;margin-bottom:4px;}
+  .project-card p{font-size:13px;color:#c9b8de;margin:0;}
+  .edu-item{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px;}
+  .edu-dot{width:10px;height:10px;border-radius:50%;background:#ff80b0;flex-shrink:0;margin-top:5px;box-shadow:0 0 8px #ff80b0;}
+  .edu-item p{margin:0;font-size:13px;color:#e2d4f0;}
+  .edu-item small{color:#a78bca;font-size:11px;}
+
+  .stats-bar{position:relative;z-index:1;background:linear-gradient(135deg,rgba(10,0,25,.9),rgba(30,0,50,.9));border-top:1px solid rgba(200,0,255,.2);padding:20px 16px;text-align:center;}
+  .stats-bar .pct{font-family:'Orbitron',sans-serif;font-size:clamp(36px,10vw,72px);font-weight:900;background:linear-gradient(135deg,#c084fc,#ff80b0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  .stats-bar p{color:#a78bca;font-size:13px;letter-spacing:2px;}
+
+  ::-webkit-scrollbar{width:4px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:rgba(200,0,255,.4);border-radius:2px;}
+</style>
+</head>
+<body>
+
+<canvas id="stars-canvas"></canvas>
+
+<section class="hero">
+  <div class="circuit-bg"></div>
+  <div class="watermark">SISTEM<br>INFORMASI<br>UNIKMA</div>
+
+  <div class="orbit-wrapper">
+    <div class="planet"></div>
+    <div class="orbit-ring" id="orbitRing"></div>
+  </div>
+
+  <div class="name-block">
+    <h1>FITRIA OKTAFIANI</h1>
+    <p>Sistem Informasi &mdash; UNIKMA</p>
+  </div>
+
+  <div class="scroll-hint">&#9660; SCROLL DOWN &#9660;</div>
+</section>
+
+<div class="stats-bar">
+  <div class="pct">100%</div>
+  <p>SEMANGAT &amp; DEDIKASI</p>
+</div>
+
+<div class="modal-overlay" id="modal-bio">
+  <div class="modal">
+    <button class="close" onclick="closeModal('bio')">&#10005;</button>
+    <h2>&#128100; BIO</h2>
+    <p>Halo! Nama saya <strong>Fitria Oktafiani</strong>, biasa dipanggil <em>Fitria</em>. Saya adalah mahasiswi aktif Program Studi <strong>Sistem Informasi</strong> di <strong>Universitas Komputama (UNIKMA) Cilacap</strong>. Lahir dengan rasa ingin tahu yang tinggi terhadap dunia teknologi dan informasi, saya percaya bahwa ilmu pengetahuan adalah kunci untuk membuka pintu masa depan yang lebih baik.</p>
+    <p>Sebagai mahasiswi Sistem Informasi, saya mendalami berbagai bidang mulai dari pemrograman, basis data, analisis sistem, hingga pengembangan aplikasi berbasis web dan mobile. Saya selalu bersemangat mengikuti perkembangan teknologi dan berusaha mengaplikasikan ilmu dalam kehidupan nyata.</p>
+    <div class="section-label">&#127919; VISI</div>
+    <p>Menjadi seorang profesional teknologi informasi yang inovatif, berintegritas, dan mampu memberikan kontribusi nyata bagi masyarakat melalui solusi digital yang cerdas dan bermanfaat.</p>
+    <div class="section-label">&#128640; MISI</div>
+    <ul>
+      <li>Terus belajar dan mengembangkan kompetensi di bidang teknologi informasi.</li>
+      <li>Menerapkan ilmu yang diperoleh untuk memecahkan permasalahan nyata di masyarakat.</li>
+      <li>Membangun jaringan kolaborasi yang positif dengan sesama pelaku teknologi.</li>
+      <li>Menjadi inspirasi bagi perempuan muda untuk berani terjun ke dunia teknologi.</li>
+    </ul>
+    <div class="section-label">&#128172; MOTTO HIDUP</div>
+    <p style="font-style:italic;color:#ff80b0;font-size:15px;">"Jangan takut memulai, karena setiap ahli dulunya pernah menjadi pemula."</p>
+    <div class="section-label">&#127859; HOBI - MEMASAK</div>
+    <p>Salah satu hobi yang paling saya cintai adalah <strong>memasak</strong>. Bagi saya, memasak bukan sekadar kegiatan dapur — melainkan sebuah seni dan bentuk ekspresi diri. Saya senang bereksperimen dengan berbagai bahan makanan, mencoba resep baru dari berbagai daerah, dan menyesuaikan cita rasa sesuai selera keluarga maupun teman-teman.</p>
+    <p>Memasak mengajarkan saya tentang kreativitas, kesabaran, dan perhatian terhadap detail — nilai-nilai yang juga sangat berguna dalam dunia teknologi! Dari membuat rendang hingga mencoba kue modern, dapur adalah laboratorium eksperimen saya yang menyenangkan.</p>
+    <div class="section-label">&#127991; SKILL</div>
+    <div>
+      <span class="badge">HTML/CSS</span>
+      <span class="badge">JavaScript</span>
+      <span class="badge">PHP</span>
+      <span class="badge">MySQL</span>
+      <span class="badge">Figma</span>
+      <span class="badge">Python Dasar</span>
+      <span class="badge">Microsoft Office</span>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-edu">
+  <div class="modal">
+    <button class="close" onclick="closeModal('edu')">&#10005;</button>
+    <h2>&#127891; PENDIDIKAN</h2>
+    <div class="section-label">RIWAYAT PENDIDIKAN</div>
+    <div class="edu-item">
+      <div class="edu-dot"></div>
+      <div>
+        <p><strong>MTs SA Tanwirul Huda</strong></p>
+        <small>Madrasah Tsanawiyah Salafiyah — Pendidikan Menengah Pertama</small>
+        <p style="margin-top:4px;font-size:13px;color:#c9b8de;">Di sinilah fondasi karakter dan semangat belajar saya terbentuk. Lingkungan pesantren mengajarkan nilai kedisiplinan, kemandirian, dan rasa syukur yang saya bawa hingga sekarang.</p>
+      </div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-dot"></div>
+      <div>
+        <p><strong>MA El-Bayan Majenang</strong></p>
+        <small>Madrasah Aliyah — Pendidikan Menengah Atas, Majenang</small>
+        <p style="margin-top:4px;font-size:13px;color:#c9b8de;">Di MA El-Bayan Majenang saya mulai mengenal dunia komputer dan teknologi informasi secara lebih serius. Pengalaman ini mendorong saya untuk melanjutkan studi di bidang Sistem Informasi.</p>
+      </div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-dot"></div>
+      <div>
+        <p><strong>Universitas Komputama (UNIKMA) Cilacap</strong></p>
+        <small>S1 Sistem Informasi — Mahasiswi Aktif</small>
+        <p style="margin-top:4px;font-size:13px;color:#c9b8de;">Saat ini menempuh pendidikan Sarjana di Prodi Sistem Informasi UNIKMA Cilacap. Mempelajari pemrograman, analisis sistem, basis data, rekayasa perangkat lunak, dan kecerdasan buatan.</p>
+      </div>
+    </div>
+    <div class="section-label">&#128218; MATA KULIAH FAVORIT</div>
+    <div>
+      <span class="badge">Basis Data</span>
+      <span class="badge">Pemrograman Web</span>
+      <span class="badge">Analisis Sistem</span>
+      <span class="badge">Kecerdasan Buatan</span>
+      <span class="badge">UI/UX Design</span>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-proyek">
+  <div class="modal">
+    <button class="close" onclick="closeModal('proyek')">&#10005;</button>
+    <h2>&#128187; PROYEK</h2>
+    <p style="color:#a78bca;font-size:13px;margin-bottom:14px;">Proyek-proyek yang dikerjakan selama studi Sistem Informasi di UNIKMA:</p>
+    <div class="project-card">
+      <h3>&#128230; Sistem Manajemen Inventaris Toko</h3>
+      <p>Aplikasi web untuk mengelola stok barang, transaksi penjualan, dan laporan keuangan menggunakan PHP, MySQL, dan Bootstrap. Dilengkapi notifikasi stok menipis otomatis.</p>
+    </div>
+    <div class="project-card">
+      <h3>&#127973; Sistem Informasi Klinik Sederhana</h3>
+      <p>Aplikasi manajemen pasien, rekam medis, dan jadwal dokter untuk klinik kecil. Dibangun menggunakan CodeIgniter 4 dan MySQL untuk memudahkan administrasi digital.</p>
+    </div>
+    <div class="project-card">
+      <h3>&#128202; Dashboard Visualisasi Data Akademik</h3>
+      <p>Menampilkan data nilai dan kehadiran mahasiswa dalam grafik interaktif menggunakan Chart.js dan PHP. Membantu dosen memantau performa mahasiswa secara real-time.</p>
+    </div>
+    <div class="project-card">
+      <h3>&#127859; Aplikasi Resep Masakan Digital</h3>
+      <p>Aplikasi web mobile-first untuk menyimpan, mencari, dan berbagi resep masakan menggunakan HTML, CSS, JavaScript, dan Firebase. Terinspirasi dari hobi memasak!</p>
+    </div>
+    <div class="project-card">
+      <h3>&#127912; Desain UI/UX Aplikasi E-Learning</h3>
+      <p>Prototype antarmuka aplikasi pembelajaran daring untuk siswa MTs/MA menggunakan Figma, menerapkan prinsip UX Research dan high-fidelity prototype.</p>
+    </div>
+    <div class="section-label">&#128295; TEKNOLOGI</div>
+    <div>
+      <span class="badge">PHP</span>
+      <span class="badge">MySQL</span>
+      <span class="badge">JavaScript</span>
+      <span class="badge">Bootstrap</span>
+      <span class="badge">Figma</span>
+      <span class="badge">Firebase</span>
+      <span class="badge">Chart.js</span>
+      <span class="badge">CodeIgniter</span>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-wa">
+  <div class="modal" style="text-align:center;">
+    <button class="close" onclick="closeModal('wa')">&#10005;</button>
+    <h2>&#128172; HUBUNGI SAYA</h2>
+    <p style="margin-bottom:20px;">Ingin berkolaborasi atau sekadar menyapa? Hubungi saya via WhatsApp!</p>
+    <div style="font-size:48px;margin:10px 0;">&#128241;</div>
+    <p style="color:#ff80b0;font-size:18px;font-weight:700;margin:8px 0;">Fitria Oktafiani</p>
+    <p style="color:#a78bca;font-size:13px;margin-bottom:20px;">Mahasiswi Sistem Informasi — UNIKMA Cilacap</p>
+    <a href="https://wa.me/6281234567890" target="_blank"
+       style="display:inline-block;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;padding:12px 28px;border-radius:30px;text-decoration:none;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:15px;letter-spacing:1px;box-shadow:0 0 20px rgba(37,211,102,.4);">
+      &#128172; Chat via WhatsApp
+    </a>
+    <p style="color:#6b5a80;font-size:11px;margin-top:16px;">*Ganti nomor WA di kode sebelum digunakan.</p>
+  </div>
+</div>
+
+<script>
+// STARS
+const canvas=document.getElementById('stars-canvas');
+const ctx=canvas.getContext('2d');
+let stars=[];
+function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;initStars();}
+function initStars(){
+  stars=[];
+  for(let i=0;i<200;i++){
+    stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1.5+.3,a:Math.random(),da:Math.random()*.005+.002});
+  }
+}
+function drawStars(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  stars.forEach(s=>{
+    s.a+=s.da;if(s.a>1||s.a<0)s.da*=-1;
+    ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fillStyle='rgba(255,255,255,'+s.a+')';ctx.fill();
+  });
+  requestAnimationFrame(drawStars);
+}
+window.addEventListener('resize',resizeCanvas);
+resizeCanvas();drawStars();
+
+// ORBIT ICONS
+const icons=[
+  {id:'bio',   label:'BIO',    angle:270, svg:'<circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>'},
+  {id:'edu',   label:'EDU',    angle:0,   svg:'<path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>'},
+  {id:'proyek',label:'PROYEK', angle:90,  svg:'<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>'},
+  {id:'wa',    label:'CHAT',   angle:180, svg:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>'},
+];
+
+const ring=document.getElementById('orbitRing');
+const wrapper=ring.parentElement;
+
+function placeIcons(){
+  ring.querySelectorAll('.orbit-icon').forEach(e=>e.remove());
+  icons.forEach(ic=>{
+    const rad=(ic.angle-90)*Math.PI/180;
+    const x=50+50*Math.cos(rad);
+    const y=50+50*Math.sin(rad);
+    const btn=document.createElement('button');
+    btn.className='orbit-icon';
+    btn.style.cssText='left:'+x+'%;top:'+y+'%;position:absolute;transform:translate(-50%,-50%);';
+    btn.innerHTML='<svg viewBox="0 0 24 24">'+ic.svg+'</svg><span>'+ic.label+'</span>';
+    btn.onclick=()=>openModal(ic.id);
+    ring.appendChild(btn);
+  });
+}
+window.addEventListener('resize',placeIcons);
+placeIcons();
+
+// Counter-rotate icons so labels stay upright
+let deg=0;
+(function loop(){
+  deg+=0.3;
+  ring.querySelectorAll('.orbit-icon').forEach(btn=>{
+    const base=btn.style.cssText;
+    btn.style.transform='translate(-50%,-50%) rotate('+(-deg)+'deg)';
+  });
+  requestAnimationFrame(loop);
+})();
+
+// MODAL
+function openModal(id){document.getElementById('modal-'+id).classList.add('active');}
+function closeModal(id){document.getElementById('modal-'+id).classList.remove('active');}
+document.querySelectorAll('.modal-overlay').forEach(o=>{
+  o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('active');});
+});
+</script>
+</body>
+</html>
