@@ -126,7 +126,26 @@ body{
   outline:none;
   padding:0;
 }
+!-- 4 tombol orbit, posisi CSS manual -->
+    <button class="ob ob-top" onclick="openM('edu')">
+      <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      <span>EDU</span>
+    </button>
 
+    <button class="ob ob-right" onclick="window.open('https://fitria10-dotcom.github.io/Fitria-SI-2A-Proyek-portofolio-/','_blank')">
+      <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      <span>PROYEK</span>
+    </button>
+
+    <button class="ob ob-bot" onclick="openM('wa')">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <span>CHAT</span>
+    </button>
+
+    <button class="ob ob-left" onclick="openM('bio')">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      <span>BIO</span>
+    </button>
 .ob:active{
   box-shadow:0 0 16px rgba(200,0,255,.8);
   border-color:rgba(255,80,180,.9);
